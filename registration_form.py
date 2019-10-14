@@ -40,7 +40,7 @@ class Registration(QMainWindow):
         self.frame.setGeometry(QtCore.QRect(0, 0, 251, 401))
         self.frame.setStyleSheet("* {\n"
                                  "    background: rgb(255,255,255);\n"
-                                 "    border-radius: 10px;\n"
+                                 "    border-radius: 7px;\n"
                                  "}")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)

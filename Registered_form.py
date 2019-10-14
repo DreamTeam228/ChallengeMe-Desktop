@@ -16,6 +16,7 @@ import encode_decode
 import json
 
 class Registered(QMainWindow):
+    COUNTER = 0
     def __init__(self):
         super().__init__()
 
@@ -38,7 +39,7 @@ class Registered(QMainWindow):
         self.frame.setGeometry(QtCore.QRect(0, 0, 651, 501))
         self.frame.setStyleSheet("* {\n"
                                  "    background: rgb(255,255,255);\n"
-                                 "    border-radius: 10px;\n"
+                                 "    border-radius: 7px;\n"
                                  "}")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -77,22 +78,33 @@ class Registered(QMainWindow):
         
         self.tableView = QtWidgets.QTableWidget(self.frame)
         self.tableView.setGeometry(QtCore.QRect(250, 20, 381, 461))
-        self.tableView.setStyleSheet("QTableView{border: 1px solid gray; border-radius: 10px;}"
-                                     "QTableView QPushButton{"
-                                     "    background: red;"
-                                     "    border: 2px outset red;"
+        self.tableView.setStyleSheet("QTableWidget{border: 1px solid gray; border-radius: 7px;}"
+                                     "QHeaderView{"
+                                     "    background: rgb(52,152,219);"
+                                     "    border-top-left-radius: 6px;"
+                                     "    border-top-right-radius: 6px;"
+                                     "    color: rgb(255,255,255)"
+                                     "}"
+                                     "QHeaderView::section{"
+                                     "    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(142,68,173, 255), stop:1 rgba(52,152,219, 255));"
+                                     "    border-top-left-radius: 6px;"
+                                     "    border-top-right-radius: 6px;"
+                                     "    color: rgb(255,255,255)"
                                      "}"
                                      ");")
-        self.tableView.setObjectName("tableView")
+        #self.tableView.setObjectName("tableView")
         self.tableView.setColumnCount(3)
-        self.tableView.setRowCount(4)
-        header = self.tableView.horizontalHeader()       
-        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        self.tableView.setRowCount(16)
+        header = self.tableView.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)#ResizeToContents       
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)#Stretch
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)#ResizeToContents
         self.tableView.verticalHeader().hide()
-        self.tableView.setHorizontalHeaderLabels(['Фамилия и имя', 'id', 'номер телефона'])
+        self.tableView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.tableView.setHorizontalHeaderLabels(['№','Фамилия и имя','Номер телефона'])
         self.tableView.resizeColumnsToContents()
+        #self.tableView.setItem(0, 0, QtWidgets.QTableWidgetItem('Иванов Иван'))
+        #self.tableView.setItem(0, 1, QtWidgets.QTableWidgetItem('+7(666)555-44-33'))
 
         self.pushButton.setText("Read QR")
         self.pushButton_2.setText("Save users info")
@@ -113,12 +125,19 @@ class Registered(QMainWindow):
        #defs
     def ScanQR(self):
         self.textEdit.clear()
-        scanned = scanqr.QR.Scan().decode("utf-8-sig").encode("utf-8")
-        print('-------------')
-        print(scanned)
-        print('-------------')
-        self.Parse(scanned)
-        self.textEdit.append(scanned)
+        if self.COUNTER >= 16:
+            self.tableView.setRowCount(self.COUNTER + 1)
+
+        self.tableView.setItem(self.COUNTER, 0, QtWidgets.QTableWidgetItem(str(self.COUNTER + 1)))
+        self.tableView.setItem(self.COUNTER, 1, QtWidgets.QTableWidgetItem('Иванов Иван'))
+        self.tableView.setItem(self.COUNTER, 2, QtWidgets.QTableWidgetItem('+7(666)555-44-33'))
+        self.COUNTER += 1
+        #scanned = scanqr.QR.Scan().decode("utf-8-sig").encode("utf-8")
+        #print('-------------')
+        #print(scanned)
+        #print('-------------')
+        #self.Parse(scanned)
+        #self.textEdit.append(scanned)
 
     def quit(self):
         sys.exit()
