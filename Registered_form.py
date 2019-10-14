@@ -42,6 +42,7 @@ class Registered(QMainWindow):
                                  "}")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        
         self.frame.setObjectName("frame")
         self.pushButton = QtWidgets.QPushButton(self.frame)
         self.pushButton.setGeometry(QtCore.QRect(20, 400, 211, 41))
@@ -56,6 +57,7 @@ class Registered(QMainWindow):
         self.textEdit = QtWidgets.QTextEdit(self.frame)
         self.textEdit.setGeometry(QtCore.QRect(20, 20, 211, 301))
         self.textEdit.setStyleSheet("border: 1px solid gray; qproperty-alignment: AlignCenter;")
+        
         self.textEdit.setObjectName("textEdit")
         self.pushButton_2 = QtWidgets.QPushButton(self.frame)
         self.pushButton_2.setGeometry(QtCore.QRect(20, 340, 211, 41))
@@ -72,10 +74,25 @@ class Registered(QMainWindow):
         self.pushButton_3.setStyleSheet("*{color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(142,68,173, 255), stop:1 rgba(52,152,219, 255));}\n"
                                         ":hover{color: rgb(0, 0, 0)}")
         self.pushButton_3.setObjectName("pushButton_3")
-        self.tableView = QtWidgets.QTableView(self.frame)
+        
+        self.tableView = QtWidgets.QTableWidget(self.frame)
         self.tableView.setGeometry(QtCore.QRect(250, 20, 381, 461))
-        self.tableView.setStyleSheet("border: 1px solid gray;")
+        self.tableView.setStyleSheet("QTableView{border: 1px solid gray; border-radius: 10px;}"
+                                     "QTableView QPushButton{"
+                                     "    background: red;"
+                                     "    border: 2px outset red;"
+                                     "}"
+                                     ");")
         self.tableView.setObjectName("tableView")
+        self.tableView.setColumnCount(3)
+        self.tableView.setRowCount(4)
+        header = self.tableView.horizontalHeader()       
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        self.tableView.verticalHeader().hide()
+        self.tableView.setHorizontalHeaderLabels(['Фамилия и имя', 'id', 'номер телефона'])
+        self.tableView.resizeColumnsToContents()
 
         self.pushButton.setText("Read QR")
         self.pushButton_2.setText("Save users info")
